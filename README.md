@@ -2,7 +2,7 @@ This is the repo for Aptos Move code.
 
 Frontend demo https://aptos-singapore-2023.vercel.app/
 
-Useful Commands to test this repo
+# Useful Commands to test this repo
 
 check your current account
 ```
