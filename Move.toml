@@ -8,5 +8,5 @@ AptosStdlib = { git = "https://github.com/aptos-labs/aptos-core.git", subdir="ap
 AptosToken = { git = "https://github.com/aptos-labs/aptos-core.git", subdir="aptos-move/framework/aptos-token/", rev="main" }
 
 [addresses]
-charity_donation = "0x1"
+charity_donation = "814cfc3a93bfff86fc4f0f2f1fcd897017fb17fb1cfdf37592968e0cc8343689"
 aptos_framework = "0x1"
