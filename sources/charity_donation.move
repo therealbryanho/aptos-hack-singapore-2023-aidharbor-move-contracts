@@ -1,7 +1,7 @@
 module charity_donation::CharityDonation {
     use std::error;
+    //use std::signer;
     use aptos_std::smart_table::{Self, SmartTable};
-    //use aptos_framework::account;
     use aptos_framework::aptos_coin::AptosCoin;
     use aptos_framework::coin;
     //use charity_donation::abc_coin;
@@ -59,15 +59,10 @@ module charity_donation::CharityDonation {
         }
     }
 
+
     // adds to apt_raised of the Charity (based on address), adds to total_apt_raised of the platform
     // sends a reward token to the donor
     public entry fun donate_to_charity(sender: &signer, charity_address: address, amount_in_apt: u64) acquires Charities {
-        //let sender_address = signer::address_of(sender);
-        //create the account if doesn't exist
-        // if (!account::exists_at(charity_address)) {
-        //     create_account(charity_address);
-        // };
-
         let platform = borrow_global_mut<Charities>(@charity_donation);
 
         //transfer to token from donor to charity
@@ -82,8 +77,8 @@ module charity_donation::CharityDonation {
         platform.total_apt_raised = newPlatformValue;
 
         //send native abc coin to the sender
-        //how to mint the native coin to the sender
-        //aptos_framework::abc_coin::mint(sender_address,amount_in_apt);
+        // let sender_address = signer::address_of(sender);
+        // charity_donation::abc_coin::mint(@charity_donation,sender_address,amount_in_apt);
     }
     
 }
