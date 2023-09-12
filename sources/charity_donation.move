@@ -1,11 +1,11 @@
-// This module demonstrates a basic shared account that could be used for NFT royalties
-// Users can (1) create a shared account (2) disperse the coins to multiple creators
 module charity_donation::CharityDonation {
     use std::error;
     use std::signer;
     use std::vector;
     use aptos_framework::account;
     use aptos_framework::coin;
+    use aptos_framework::abc_coin;
+    use aptos_framework::aptos_account;
 
     // struct Charity records the address of the charity and their corresponding apt raised
     struct Charity has store,drop,copy {
@@ -36,8 +36,26 @@ module charity_donation::CharityDonation {
 
     // adds to apt_raised of the Charity (based on address), adds to total_apt_raised of the platform
     // sends a reward token to the donor
-    public fun donate_to_charity(addr: address, amount_in_apt: u64) {
+    public fun donate_to_charity(sender: &signer, charity_address: address, amount_in_apt: u64) {
+        let sender_address = signer::address_of(account);
+        //create the account if doesn't exist
+        if (!account::exists_at(charity_address)) {
+            create_account(charity_address);
+        };
+        //transfer to token from donor to charity
+        coin::transfer<AptosCoin>(sender_address,charity_address, amount);
+        //update the charity total raised value
+        let charityToUpdate = borrow_global_mut<Charity>(charity_address);
+        let new_total_value_for_charity = charityToUpdate.apt_raised + amount;
+        charityToUpdate.apt_raised = new_total_value_for_charity;
+        //update the platform total raised value
+        let oldPlatformValue = <Charities>.total_apt_raised;
+        let newPlatformValue = oldPlatformValue + amount_in_apt;
+        charityToUpdate.apt_raised = newPlatformValue;
 
+        //send native abc coin to the sender
+        //how to mint the native coin to the sender
+        aptos_framework::abc_coin::mint(sender_address,amount_in_apt);
     }
     
 }
