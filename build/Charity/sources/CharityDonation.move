@@ -25,24 +25,36 @@ module charity_donation::CharityDonation {
     const ERESOURCE_DNE: u64 = 1;
     const EINSUFFICIENT_BALANCE: u64 = 2;
 
-    public fun get_charity_apt_raised(addr: address): u64 acquires Charity {
-        assert!(exists<Charity>(addr), error::not_found(EACCOUNT_NOT_FOUND));
-        borrow_global<Charity>(addr).apt_raised
+    fun init_module(sender: &signer) {
+        let c = Charities {
+            charities: vector::empty<Charity>(),
+            total_apt_raised: 0,
+        };
+        move_to(sender, c);
     }
 
+    #[view]
+    public fun get_charity_apt_raised(addr: address): u64 acquires Charity {
+        assert!(exists<Charity>(addr), error::not_found(EACCOUNT_NOT_FOUND));
+        let retValue = borrow_global<Charity>(addr).apt_raised;
+        retValue
+    }
+
+    #[view]
     public fun get_platform_apt_raised(): u64 acquires Charities {
-        borrow_global<Charities>(@0x1).total_apt_raised
+        let retValue = borrow_global<Charities>(@charity_donation).total_apt_raised;
+        retValue
     }
 
     //acquires Charities
     public entry fun add_charity(addr: address) acquires Charities {
-        if (!exists<Charities>(addr)) {    
+        if (exists<Charities>(addr)) {    
             let newCharity = Charity {
                 charity_wallet: addr,
                 apt_raised: 0
             };
             
-            let platform = borrow_global_mut<Charities>(@0x1);
+            let platform = borrow_global_mut<Charities>(@charity_donation);
             vector::push_back(&mut platform.charities, newCharity);
         }
     }
@@ -63,7 +75,7 @@ module charity_donation::CharityDonation {
         let new_total_value_for_charity = charityToUpdate.apt_raised + amount_in_apt;
         charityToUpdate.apt_raised = new_total_value_for_charity;
         //update the platform total raised value
-        let platform = borrow_global_mut<Charities>(@0x1);
+        let platform = borrow_global_mut<Charities>(@charity_donation);
         let oldPlatformValue = platform.total_apt_raised;
         let newPlatformValue = oldPlatformValue + amount_in_apt;
         platform.total_apt_raised = newPlatformValue;
