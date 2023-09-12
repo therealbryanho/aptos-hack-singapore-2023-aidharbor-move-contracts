@@ -1,4 +1,4 @@
-module aptos_framework::abc_coin {
+module charity_donation::abc_coin {
     use std::string;
     use std::error;
     use std::signer;
