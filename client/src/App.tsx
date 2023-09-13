@@ -25,37 +25,36 @@ function App() {
       //   `${moduleAddress}::charity_donation::CharityDonation`
       // );
       // console.log("CharityDonationResource: "+CharityDonationResource);
-      client.getAccountResources(moduleAddress).then(setResources);
-      const resourceType = `${moduleAddress}::CharityDonation::get_charity_apt_raised`;
-      const resource = resources.find((r) => r.type === resourceType);
-      const data = resource?.data as {message: string} | undefined;
-      const message = data?.message;
-      console.log('message from fetch: '+message);
+        try {
+          const data = await new AptosClient(
+            'https://fullnode.testnet.aptoslabs.com'
+          ).view({
+            function: `${moduleAddress}::CharityDonation::get_charity_apt_raised`,
+            type_arguments: [],
+            arguments: ["0x32e5a9e28f5d6d74279ac50edd4b912b196ac8219a7c81037c12ac8fcdf16de4"],
+          });
       
-      const url = 'https://fullnode.testnet.aptoslabs.com/v1/view';
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json, application/x-bcs'
-        },
-        body: '{"function":"46237378154b23618ecabe046cf1832f536766eb095813c2b1265845e05d9adb::CharityDonation::get_charity_apt_raised","type_arguments":[],"arguments":["0x32e5a9e28f5d6d74279ac50edd4b912b196ac8219a7c81037c12ac8fcdf16de4"]}'
-      };
-
-      fetch(url, options)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
+          if (data[0]) {
+            console.log("Total Raised for this Charity alone data[0]:"+data[0]);
+            console.log("Total Raised for this Charity alone data:"+data);
+            return {
+              success: true,
+              status: 'COMPLETED',
+            };
           }
-          return response.json(); // This parses the JSON data in the response
-        })
-        .then(data => {
-          // You can now work with the parsed data
-          console.log("Total Raised for this Charity alone:"+data);
-        })
-        .catch(error => {
-          console.error('There was a problem with the fetch operation:', error);
-        });  
+      
+          return {
+            success: true,
+            status: 'CHARITY_DONT_EXIST',
+          };
+        } catch (error) {
+          console.log(error);
+          return {
+            success: false,
+            status: 'ERROR',
+          };
+        }
+      
 
       setAccountHasList(true);
     } catch (e: any) {
