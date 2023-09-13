@@ -1,4 +1,4 @@
-Aptos Hack Singapore 2023 - Team AidHabor
+# Aptos Hack Singapore 2023 - Team AidHabor
 
 Teammates:
 * Bryan Ho - https://github.com/therealbryanho
@@ -11,7 +11,7 @@ Frontend demo https://aptos-singapore-2023.vercel.app/
 
 Testnet module https://explorer.aptoslabs.com/account/0x46237378154b23618ecabe046cf1832f536766eb095813c2b1265845e05d9adb/modules/code/CharityDonation?network=testnet
 
-# Useful Commands to test this repo
+## Useful Commands to test this repo
 
 NodeJs - start local server in client folder
 ```
