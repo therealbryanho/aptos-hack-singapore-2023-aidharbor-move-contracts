@@ -111,7 +111,6 @@ function App() {
         </Row>
       </Layout>
       <Spin spinning={transactionInProgress}>
-        {!accountHasList && (
         <Row gutter={[0, 32]} style={{ marginTop: "2rem" }}>
           <Col span={8} offset={8}>
             <Button onClick={donateNow} block type="primary" style={{ height: "40px", backgroundColor: "#3f67ff" }}>
@@ -119,7 +118,6 @@ function App() {
             </Button>
           </Col>
         </Row>
-         )}
       </Spin>
     </>
   );
