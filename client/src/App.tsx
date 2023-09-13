@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import { Provider, Network } from "aptos";
+import { Provider, Network, Types, AptosClient } from "aptos";
 import { Layout, Row, Col, Button, Spin } from "antd";
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 import "@aptos-labs/wallet-adapter-ant-design/dist/index.css";
@@ -8,12 +8,14 @@ import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 const provider = new Provider(Network.TESTNET);
 const moduleAddress = "0x46237378154b23618ecabe046cf1832f536766eb095813c2b1265845e05d9adb";
+const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1');
 
 function App() {
   const [transactionInProgress, setTransactionInProgress] = useState<boolean>(false);
   const { account, signAndSubmitTransaction } = useWallet();
   const [accountHasList, setAccountHasList] = useState<boolean>(false);
   const [totalAptRaised, setTotalAptRaised] = useState(null);
+  const [resources, setResources] = React.useState<Types.MoveResource[]>([]);
 
   const fetchList = async () => {
   // if (!account) return [];    
@@ -23,7 +25,12 @@ function App() {
       //   `${moduleAddress}::charity_donation::CharityDonation`
       // );
       // console.log("CharityDonationResource: "+CharityDonationResource);
-
+      client.getAccountResources(moduleAddress).then(setResources);
+      const resourceType = `${moduleAddress}::CharityDonation::get_charity_apt_raised`;
+      const resource = resources.find((r) => r.type === resourceType);
+      const data = resource?.data as {message: string} | undefined;
+      const message = data?.message;
+      console.log('message from fetch: '+message);
       
       const url = 'https://fullnode.testnet.aptoslabs.com/v1/view';
       const options = {
