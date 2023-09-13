@@ -1,9 +1,9 @@
 Aptos Hack Singapore 2023 - Team AidHabor
 
 Teammates:
-*Bryan Ho - https://github.com/therealbryanho
-*Zeyu Yao - https://github.com/cytronicoder
-*Gustav Kalander - https://github.com/guskal01
+* Bryan Ho - https://github.com/therealbryanho
+* Zeyu Yao - https://github.com/cytronicoder
+* Gustav Kalander - https://github.com/guskal01
 
 This is the repo for our project Aptos Move code.
 
