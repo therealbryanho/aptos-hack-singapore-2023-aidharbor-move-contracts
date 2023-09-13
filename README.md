@@ -2,6 +2,8 @@ This is the repo for Aptos Move code.
 
 Frontend demo https://aptos-singapore-2023.vercel.app/
 
+Testnet module https://explorer.aptoslabs.com/account/0x46237378154b23618ecabe046cf1832f536766eb095813c2b1265845e05d9adb/modules/code/CharityDonation?network=testnet
+
 # Useful Commands to test this repo
 
 check your current account
