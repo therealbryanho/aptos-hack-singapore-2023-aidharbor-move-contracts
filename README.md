@@ -1,4 +1,11 @@
-This is the repo for Aptos Move code.
+Aptos Hack Singapore 2023 - Team AidHabor
+
+Teammates:
+*Bryan Ho - https://github.com/therealbryanho
+*Zeyu Yao - https://github.com/cytronicoder
+*Gustav Kalander - https://github.com/guskal01
+
+This is the repo for our project Aptos Move code.
 
 Frontend demo https://aptos-singapore-2023.vercel.app/
 
@@ -6,27 +13,27 @@ Testnet module https://explorer.aptoslabs.com/account/0x46237378154b23618ecabe04
 
 # Useful Commands to test this repo
 
-start local server
+NodeJs - start local server in client folder
 ```
 npm start
 ```
 
-check your current account
+Aptos CLI - check your current account
 ```
 aptos config show-profile --profile default
 ```
 
-create a new account if required
+Aptos CLI - create a new account if required
 ```
 aptos init --profile new
 ```
 
-publish the module
+Aptos CLI - publish the module
 ```
 aptos move publish --named-addresses charity_donation=default
 ```
 
-add "red cross" wallet (this is a wallet we created in testnet)
+Aptos CLI - add "red cross" wallet (this is a wallet we created in testnet)
 ```
 aptos move run --function-id 'default::CharityDonation::add_charity' --args 'address:0xad66dff3421f9a87dcc401f26a061ee8598c73b24c1ef11fe6ea5b81e98a135a'
 ```
@@ -34,12 +41,12 @@ aptos move run --function-id 'default::CharityDonation::add_charity' --args 'add
 aptos move run --function-id 'default::CharityDonation::add_charity' --args 'address:0x32e5a9e28f5d6d74279ac50edd4b912b196ac8219a7c81037c12ac8fcdf16de4'
 ```
 
-check how much in total the platform has raised for charity
+Aptos CLI - check how much in total the platform has raised for charity
 ```
 aptos move view --function-id 'default::CharityDonation::get_platform_apt_raised' 
 ```
 
-check how much "red cross" wallet has raised (return value is in Octa)
+Aptos CLI - check how much "red cross" wallet has raised (return value is in Octa)
 ```
 aptos move view --function-id 'default::CharityDonation::get_charity_apt_raised' --args 'address:0xad66dff3421f9a87dcc401f26a061ee8598c73b24c1ef11fe6ea5b81e98a135a'
 ```
@@ -47,7 +54,7 @@ aptos move view --function-id 'default::CharityDonation::get_charity_apt_raised'
 aptos move view --function-id 'default::CharityDonation::get_charity_apt_raised' --args 'address:0x32e5a9e28f5d6d74279ac50edd4b912b196ac8219a7c81037c12ac8fcdf16de4'
 ```
 
-donate to "red cross" wallet
+Aptos CLI -  to "red cross" wallet
 ```
 aptos move run --function-id 'default::CharityDonation::donate_to_charity' --args 'address:0xad66dff3421f9a87dcc401f26a061ee8598c73b24c1ef11fe6ea5b81e98a135a' 'u64:100'
 ```
