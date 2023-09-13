@@ -6,6 +6,11 @@ Testnet module https://explorer.aptoslabs.com/account/0x46237378154b23618ecabe04
 
 # Useful Commands to test this repo
 
+start local server
+```
+npm start
+```
+
 check your current account
 ```
 aptos config show-profile --profile default
